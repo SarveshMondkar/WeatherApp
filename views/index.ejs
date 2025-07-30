@@ -37,7 +37,7 @@
 
         <div class="weather-container box box1">
             <h1>Today's Forecast</h1>
-            <div class="info-container">
+            <div class="info-container one">
                 <div class="info ">
                     <% for(i=1;i<=5;i++){ %>
                         <div class="row">
@@ -55,7 +55,7 @@
 
         <div class="weather-container box box2">
             <h1><%= city %> , <%= country %></h1>
-            <div class="info-container">
+            <div class="info-container two">
                 <div class="info">
                     <img class="icon" src="https://openweathermap.org/img/wn/<%= list[0].weather[0].icon %>@2x.png" alt="weather icon" />
                     <p><%= list[0].weather[0].description %></p>
@@ -74,7 +74,7 @@
         <div class="weather-container box box3">
             <h1>5 Day Forecast</h1>
             <% const dailyForecasts = list.filter(entry => entry.dt_txt.includes("12:00:00")); %>
-            <div class="info-container-2">
+            <div class="info-container-2 three">
                 <%dailyForecasts.forEach(i =>  {%>
                     <div class="card">
                         <p><%= i.dt_txt.slice(0, 10) %></p>
