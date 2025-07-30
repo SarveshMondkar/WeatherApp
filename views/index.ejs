@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+    <form action="/weather" method="post">
+    <h1 class="title">🌤️WEATHER APP</h1>
+    <div class="form-group" >
+        <input type="text" name="city" placeholder="ENTER CITY NAME" required />
+        <button type="submit">Get Weather</button>
+    </div>
+    </form>
+
+
+    <% if (city && list) { 
+    let feelsLike = list[0].main.feels_like;
+    let emoji = '🌡️';
+    if (feelsLike <= 10) {
+        emoji = '❄️';
+    } else if (feelsLike <= 20) {
+        emoji = '🥶';
+    } else if (feelsLike <= 30) {
+        emoji = '😊';
+    } else {
+        emoji = '🥵';
+    }
+    %>
+
+    <div class="main-container">
+
+        <div class="weather-container box box1">
+            <h1>Today's Forecast</h1>
+            <div class="info-container">
+                <div class="info ">
+                    <% for(i=1;i<=5;i++){ %>
+                        <div class="row">
+                            <p><%= list[i].dt_txt.slice(0, 10) %></p>
+                            <p><%= list[i].dt_txt.slice(11, 19) %></p>
+                            <img src="https://openweathermap.org/img/wn/<%= list[i].weather[0].icon %>@2x.png" alt="weather icon" />
+                            <p><%= list[i].main.temp %> °C</p>
+                            <p><%= list[i].weather[0].description %></p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="weather-container box box2">
+            <h1><%= city %> , <%= country %></h1>
+            <div class="info-container">
+                <div class="info">
+                    <img class="icon" src="https://openweathermap.org/img/wn/<%= list[0].weather[0].icon %>@2x.png" alt="weather icon" />
+                    <p><%= list[0].weather[0].description %></p>
+                </div>      
+                <div class="info">
+                    <h2> <%= list[0].main.temp %> °C</h2>
+                    <p><%= emoji %> Feels like <%= feelsLike %> °C</p>
+                    <p class="rowTemp"><i class="fa-solid fa-arrow-up"> </i><%= list[0].main.temp_min %> °C<i class="fa-solid fa-arrow-down"></i><%= list[0].main.temp_max %> °C</p>
+                    <p>💧 Humidity: <%= list[0].main.humidity %>%</p>
+                    <p>≈ Wind: <%= list[0].wind.speed %></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="weather-container box box3">
+            <h1>5 Day Forecast</h1>
+            <% const dailyForecasts = list.filter(entry => entry.dt_txt.includes("12:00:00")); %>
+            <div class="info-container-2">
+                <%dailyForecasts.forEach(i =>  {%>
+                    <div class="card">
+                        <p><%= i.dt_txt.slice(0, 10) %></p>
+                        <img src="https://openweathermap.org/img/wn/<%= i.weather[0].icon %>@2x.png" alt="weather icon" />
+                        <p><%= i.main.temp %> °C</p>
+                        <p><%= i.weather[0].description %></p>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+
+    </div>
+
+    <% } else if (error) { %>
+        <p style="color: rgb(255, 100, 100);"><%= error %></p>
+    <% } %>
+
+</body>
+</html>
