@@ -49,6 +49,14 @@ body {
 }
 
 /* Form */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 form {
   display: flex;
   justify-content: center;
@@ -75,9 +83,10 @@ input[type="text"] {
 
 /* Button */
 button {
-  flex: 1 1 30%;
-  min-width: 100px;
+  flex: 0 0 auto;
+  /* keep everything else */
   padding: 10px 20px;
+  min-width: 100px;
   border: none;
   border-radius: 8px;
   background-color: #ffd400;
@@ -294,6 +303,53 @@ img {
 
   .info-container {
     gap: 16px;
+  }
+}
+
+
+/* Form group styling */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive behavior */
+@media (max-width: 600px) {
+  .form-group {
+    flex-direction: column;
+    align-items: center; /* <- changed from 'stretch' */
+  }
+
+  .form-group input[type="text"] {
+    width: 100%; /* input should still stretch */
+    margin: 0;
+  }
+
+  .form-group button {
+    width: auto;        /* <- don't stretch */
+    min-width: 100px;
+    margin: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-group {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .form-group input[type="text"] {
+    width: 100%;
+    margin: 0;
+  }
+
+  .form-group button {
+    width: auto;
+    min-width: 100px;
+    margin: 0;
   }
 }
 
